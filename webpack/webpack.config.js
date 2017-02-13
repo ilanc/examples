@@ -1,9 +1,10 @@
+const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
   entry: './app/main.js',
   output: {
-    path: '/public',
+    path: path.resolve(__dirname, 'public'),
     publicPath: '/public/',
     filename: 'bundle.js'
   },
@@ -15,12 +16,18 @@ module.exports = {
       {
         test: /\.tag$/,
         exclude: /node_modules/,
-        loader: 'tag-loader',
+        loader: 'riot-tag-loader',
         query: {
-          type: 'es6' // transpile the riot tags using babel
+          type: 'es6', // transpile the riot tags using babel
+          hot: true,
+          debug: true
         }
       },
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
     ]
   }
 }
